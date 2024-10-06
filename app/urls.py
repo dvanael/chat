@@ -1,8 +1,7 @@
 from django.urls import path, include
-from app.routes import main
+from app.routes import main, profile
 
 urlpatterns = [
-    path('', include(main)),
+    path("", include(main)),
+    path("perfil/", include(profile)),
 ]
-
-
