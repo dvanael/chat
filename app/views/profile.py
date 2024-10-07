@@ -1,11 +1,14 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
+from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.contrib.auth.models import User
 from django.contrib.auth.views import redirect_to_login
 from django.contrib import messages
-from app.forms import ProfileForm
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
+from app.forms import ProfileForm, EmailForm
 
 
 def profile_detail(request, username=None):
@@ -44,3 +47,64 @@ def profile_edit(request):
     context["form"] = form
     context["onboarding"] = onboarding
     return render(request, template_name, context)
+
+
+@login_required
+def profile_settings(request):
+    template_name = "profile/settings.html"
+    return render(request, template_name)
+
+
+@login_required
+def profile_email_change(request):
+    template_name = "partials/email_form.html"
+    context = {}
+
+    if request.htmx:
+        form = EmailForm(instance=request.user)
+        context["form"] = form
+        return render(request, template_name, context)
+
+    if request.method == "POST":
+        form = EmailForm(request.POST, instance=request.user)
+
+        if form.is_valid():
+
+            # Check if the email already exists
+            email = form.cleaned_data["email"]
+            if User.objects.filter(email=email).exclude(id=request.user.id).exists():
+                messages.warning(request, f"{email} is already in use.")
+                return redirect("profile_settings")
+
+            form.save()
+
+            # Then Signal updates emailaddress and set verified to False
+
+            # Then send confirmation email
+            messages.success(request, "Saved")
+            return redirect("profile_settings")
+        else:
+            messages.warning(request, "Form not valid")
+            return redirect("profile_settings")
+    return redirect("index")
+
+
+def check_email(request):
+
+    if request.htmx:
+        email = request.GET.get("email")
+
+        try:
+            validate_email(email)
+            email_exists = (
+                User.objects.filter(email=email).exclude(id=request.user.id).exists()
+            )
+            if email_exists:
+                return HttpResponse(f"Esse email já está em uso.")
+            else:
+                return HttpResponse(f"Email poggers!")
+        except ValidationError:
+            return HttpResponse(f"Digite um email válido.")
+
+    else:
+        return redirect("profile_settings")

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Configurações{% endblock title %}
+
+{% block content %}
+<main>
+  <h1>Configurações</h1>
+  <div class="">
+    <h2>Email</h2>
+    <div id="email-address">
+      <p>
+        {% if user.email %}{{user.email}}{% else %}Sem Email{% endif %}
+      </p>
+      <p>Verificado: {{request.user.emailaddress.verified}}</p>
+    </div>
+    <a id="email-edit"
+      hx-get="{% url 'profile_email_change' %}"
+      hx-target="#email-address"
+      hx-swap="innerHTML" >
+      Edit
+    </a>
+  </div>
+</main>
+{% endblock content %}

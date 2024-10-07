@@ -1,2 +1,2 @@
-from .profile import ProfileForm
+from .profile import ProfileForm, EmailForm
 from .user import UserForm

@@ -15,7 +15,7 @@
 </head>
 <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' class="{% block class %}{% endblock class %}">
   {% block navbar %}{% include "components/navbar.html" %}{% endblock navbar %}
-
+  {% include "components/messages.html" %}
   {% block content %}{% endblock content %}
 </body>
 </html>
