@@ -14,7 +14,7 @@
   {% django_htmx_script %}
 </head>
 <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' class="{% block class %}{% endblock class %}">
-  {% block navbar %}{% include "partials/navbar.html" %}{% endblock navbar %}
+  {% block navbar %}{% include "components/navbar.html" %}{% endblock navbar %}
 
   {% block content %}{% endblock content %}
 </body>
