@@ -1,13 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
-from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import logout
 from django.contrib.auth.models import User
 from django.contrib.auth.views import redirect_to_login
 from django.contrib import messages
-from django.core.validators import validate_email
-from django.core.exceptions import ValidationError
 from app.forms import ProfileForm, EmailForm
 
 
@@ -87,24 +83,3 @@ def profile_email_change(request):
             messages.warning(request, "Form not valid")
             return redirect("profile_settings")
     return redirect("index")
-
-
-def check_email(request):
-
-    if request.htmx:
-        email = request.GET.get("email")
-
-        try:
-            validate_email(email)
-            email_exists = (
-                User.objects.filter(email=email).exclude(id=request.user.id).exists()
-            )
-            if email_exists:
-                return HttpResponse(f"Esse email já está em uso.")
-            else:
-                return HttpResponse(f"Email poggers!")
-        except ValidationError:
-            return HttpResponse(f"Digite um email válido.")
-
-    else:
-        return redirect("profile_settings")

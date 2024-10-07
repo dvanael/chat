@@ -12,6 +12,11 @@
         {% if user.email %}{{user.email}}{% else %}Sem Email{% endif %}
       </p>
       <p>Verificado: {{request.user.emailaddress.verified}}</p>
+      {% if not request.user.emailaddress.verified %}
+      <a hx-get="{% url 'email_verification' %}" hx-target="#email-response" hx-swap="innerHTML">Verificar Email</a>
+      <div id="email-response"></div>
+      {% endif %}
+
     </div>
     <a id="email-edit"
       hx-get="{% url 'profile_email_change' %}"

@@ -22,7 +22,7 @@ class EmailForm(ModelForm):
         widget=forms.EmailInput(
             attrs={
                 "placeholder": "Email",
-                "hx-get": reverse_lazy("profile_email_check"),
+                "hx-get": reverse_lazy("email_check"),
                 "hx-trigger": "keyup changed delay:500ms",
                 "hx-target": "#email-check",
             }
