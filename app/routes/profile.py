@@ -5,7 +5,8 @@ from app.views.profile import (
 )
 
 urlpatterns = [
-    path("", profile_detail, name="profile_detail"),
+    path("", profile_detail, name="profile"),
     path("editar/", profile_edit, name="profile_edit"),
     path("onboarding/", profile_edit, name="profile_onboarding"),
+    path("<username>/", profile_detail, name="profile_detail"),
 ]
