@@ -37,7 +37,7 @@ class EmailAddress(models.Model):
         message = EmailMultiAlternatives(
             subject = subject,
             body = plain_message,
-            from_email = settings.DEFAULT_FROM_EMAIL,
+            from_email = settings.EMAIL_HOST_USER,
             to = [self.email],
         )
 
