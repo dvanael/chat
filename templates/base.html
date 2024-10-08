@@ -11,6 +11,8 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
   <link rel="stylesheet" href="{% static 'css/main.css' %}">
   <script src="https://unpkg.com/htmx.org@2.0.3" integrity="sha384-0895/pl2MU10Hqc6jd4RvrthNlDiE9U1tWmX7WRESftEDRosgxNsQG/Ze9YMRzHq" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/ws.js"></script>
+
   {% django_htmx_script %}
 </head>
 <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' class="{% block class %}{% endblock class %}">
@@ -18,4 +20,5 @@
   {% include "components/messages.html" %}
   {% block content %}{% endblock content %}
 </body>
+{% block script %}{% endblock script %}
 </html>

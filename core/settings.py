@@ -27,6 +27,7 @@ DJANGO_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
+    "daphne",
     "django_cleanup.apps.CleanupConfig",
     "django_htmx",
 ]
@@ -35,7 +36,7 @@ LOCAL_APPS = [
     "app",
 ]
 
-INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
+INSTALLED_APPS = THIRD_PARTY_APPS + DJANGO_APPS + LOCAL_APPS
 
 
 MIDDLEWARE = [
@@ -67,9 +68,14 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "core.wsgi.application"
+# WSGI_APPLICATION = "core.wsgi.application"
+ASGI_APPLICATION = "core.asgi.application"
 
-
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
+    },
+}
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 

@@ -1,0 +1,6 @@
+
+{% if user == message.author %}
+  <p>Eu: {{message.body}}</p>
+{% else %}
+  <p>@{{ message.author.username }}: {{message.body}}</p>
+{% endif %}

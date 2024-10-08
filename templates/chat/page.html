@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{chat_group.group_name}}{% endblock title %}
+
+{% block content %}
+<main>
+  <h1>{{chat_group.group_name}}</h1>
+  <span id="online-count"></span> online
+  <div id="chat_messages">
+    {% for message in chat_messages reversed %}
+      {% include "chat/message.html" %}
+    {% endfor %}
+  </div>
+  <form id="id-form-message" action="{% url 'chat' %}" method="post"
+    hx-ext="ws"
+    ws-connect="/ws/chat_group/Global/"
+    ws-send
+  >
+    {% csrf_token %}
+    {{form}}
+    <button type="submit">Enviar</button>
+  </form>
+</main>
+{% endblock content %}
+
+{% block script %}
+<script src="{% static 'js/form_reset.js' %}"></script>
+{% endblock script %}
