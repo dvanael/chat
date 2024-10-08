@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth.views import redirect_to_login
+from django.contrib.auth import logout
 from django.contrib import messages
 from app.forms import ProfileForm, EmailForm
 
@@ -33,7 +34,7 @@ def profile_edit(request):
         form = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
         if form.is_valid():
             form.save()
-            return redirect("profile_detail")
+            return redirect("profile")
 
     if request.path == reverse("profile_onboarding"):
         onboarding = True
@@ -65,21 +66,31 @@ def profile_email_change(request):
         form = EmailForm(request.POST, instance=request.user)
 
         if form.is_valid():
-
-            # Check if the email already exists
             email = form.cleaned_data["email"]
+
             if User.objects.filter(email=email).exclude(id=request.user.id).exists():
                 messages.warning(request, f"{email} is already in use.")
                 return redirect("profile_settings")
 
             form.save()
-
-            # Then Signal updates emailaddress and set verified to False
-
-            # Then send confirmation email
             messages.success(request, "Saved")
             return redirect("profile_settings")
+
         else:
             messages.warning(request, "Form not valid")
             return redirect("profile_settings")
     return redirect("index")
+
+
+def profile_delete(request):
+    template_name = "profile/delete.html"
+    context = {}
+    user = request.user
+
+    if request.method == "POST":
+        logout(request)
+        user.delete()
+        messages.success(request, "Sua conta foi excluída. Até mais.")
+        return redirect("index")
+
+    return render(request, template_name, context)

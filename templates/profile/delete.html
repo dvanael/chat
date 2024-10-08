@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Deletar Conta{% endblock title %}
+
+{% block content %}
+<main>
+  <h1>Deseja mesmo deletar sua conta?</h1>
+  <form action="{% url 'profile_delete' %}" method="post">
+    {% csrf_token %}
+    <a href="{% url 'profile_settings' %}">Cancelar</a>
+    <button type="submit">Deletar Conta</button>
+  </form>
+</main>
+{% endblock content %}
