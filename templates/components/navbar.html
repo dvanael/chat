@@ -1,24 +1,29 @@
-<nav>
-  <ul>
-    <li><a href="{% url 'index' %}">Inicio</a></li>
-    <li><a href="{% url 'profile' %}">Perfil</a></li>
-    <li><a href="{% url 'profile_settings' %}">Perfil</a></li>
-  </ul>
-  <ul>
-  <ul>
-    {% if request.user.is_authenticated %}
-    <li><span>{{request.user.username}}</span></li>
-    <li>
-      <a href="{% url 'logout' %}">Logout</a>
-    </li>
-    {% else %}
-    <li>
-      <a href="{% url 'login' %}">Login</a>
-    </li>
-    <li>
-      <a href="{% url 'register' %}?next={% url 'profile_onboarding' %}">Cadastra-se</a>
-    </li>
-    {% endif %}
-  </ul>
-  </ul>
-</nav>
+{% load static %}
+<div class="container-fluid navbar">
+  <nav class="container">
+    <ul>
+      <li><a href="{% url 'index' %}"><img class="nav-logo" src="{% static 'svg/logo.svg' %}" alt="Logo"></a></li>
+      <li><a href="{% url 'profile' %}">Perfil</a></li>
+      <li><a href="{% url 'profile_settings' %}">Perfil</a></li>
+    </ul>
+    <ul>
+    <ul>
+      {% if request.user.is_authenticated %}
+      <li>
+        <img class="nav-pfp" src="{{request.user.profile.avatar}}" alt="Foto de Perfil de {{request.user.username}}">
+      </li>
+      <li>
+        <a class="btn" href="{% url 'logout' %}">Sair</a>
+      </li>
+      {% else %}
+      <li>
+        <a class="btn" href="{% url 'login' %}">Entrar</a>
+      </li>
+      <li>
+        <a href="{% url 'register' %}?next={% url 'profile_onboarding' %}">Cadastra-se</a>
+      </li>
+      {% endif %}
+    </ul>
+    </ul>
+  </nav>
+</div>
