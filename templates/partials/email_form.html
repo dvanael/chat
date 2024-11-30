@@ -2,9 +2,9 @@
   {% csrf_token %}
   {% for field in form %}{{ field }}{% endfor %}
   <div id="email-check">Digite email válido.</div>
-  <button type="submit">Submit</button>
+  <button type="submit">Salvar</button>
 </form>
 
-<a hx-swap-oob="true" id="email-edit" href="{% url 'profile_settings' %}">
-  Cancel
+<a type="button" hx-swap-oob="true" id="email-edit" href="{% url 'profile_settings' %}">
+  Cancelar
 </a>

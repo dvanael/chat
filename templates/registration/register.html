@@ -1,10 +1,9 @@
 {% extends "base.html" %}
 
 {% block title %}Cadastro{% endblock title %}
-{% block navbar %}{% endblock navbar %}
 {% block content %}
 <main>
-  <h1>Cadastro</h1>
+  <h1>Cadastro <a href="{% url 'login' %}">ou Entrar</a></h1>
   <form action="{% url 'register' %}" method="post">
     {% csrf_token %}
     {{form.as_p}}

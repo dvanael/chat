@@ -2,15 +2,17 @@
 <div class="container-fluid navbar">
   <nav class="container">
     <ul>
-      <li><a href="{% url 'index' %}"><img class="nav-logo" src="{% static 'svg/logo.svg' %}" alt="Logo"></a></li>
+      <li><a href="{% url 'index' %}">CTRL+CHAT</a></li>
       <li><a href="{% url 'profile' %}">Perfil</a></li>
-      <li><a href="{% url 'profile_settings' %}">Perfil</a></li>
+      <li><a href="{% url 'profile_settings' %}">Configurações</a></li>
     </ul>
     <ul>
     <ul>
       {% if request.user.is_authenticated %}
       <li>
-        <img class="nav-pfp" src="{{request.user.profile.avatar}}" alt="Foto de Perfil de {{request.user.username}}">
+        <a href="{% url 'profile' %}">
+          <img class="nav-pfp" src="{{request.user.profile.avatar}}" alt="Foto de Perfil de {{request.user.username}}">
+        </a>
       </li>
       <li>
         <a class="btn" href="{% url 'logout' %}">Sair</a>

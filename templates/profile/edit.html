@@ -5,7 +5,7 @@
 {% block content %}
 <main>
   {% if onboarding %}
-    <h1>Complete seu Perfil</h1>
+    <h1>Complete seu Perfil ou <a href="{% url 'index' %}">Pular essa Parte</a></h1>
   {% else %}
     <h1>Edite seu Perfil</h1>
   {% endif %}
@@ -14,10 +14,8 @@
     {% csrf_token %}
     {{form.as_p}}
     <button type="submit">Salvar</button>
-    {% if onboarding %}
-      <a href="{% url 'index' %}">Pular</a>
-    {% else %}
-      <a href="{{ request.META.HTTP_REFERER }}">Cancelar</a>
+    {% if not onboarding %}
+      <a type="button" href="{{ request.META.HTTP_REFERER }}">Cancelar</a>
     {% endif %}
   </form>
 </main>

@@ -9,25 +9,27 @@
     <h2>Email</h2>
     <div id="email-address">
       <p>
-        {% if user.email %}{{user.email}}{% else %}Sem Email{% endif %}
+        <strong>
+          {% if user.email %}{{user.email}}{% else %}Sem Email{% endif %}
+        </strong>
       </p>
-      <p>Verificado: {{request.user.emailaddress.verified}}</p>
+      <p>Verificado: <strong>{% if request.user.emailaddress.verified %}Sim{% else %}Não{% endif %}</strong></p>
       {% if not request.user.emailaddress.verified %}
-      <a hx-get="{% url 'email_verification' %}" hx-target="#email-response" hx-swap="innerHTML">Verificar Email</a>
+      <a type="button" hx-get="{% url 'email_verification' %}" hx-target="#email-response" hx-swap="innerHTML">Verificar Email</a>
       <div id="email-response"></div>
       {% endif %}
 
     </div>
-    <a id="email-edit"
+    <a type="button" id="email-edit"
       hx-get="{% url 'profile_email_change' %}"
       hx-target="#email-address"
       hx-swap="innerHTML" >
-      Edit
+      Editar Email
     </a>
   </div>
   <div class="">
     <h2>Deletar Conta</h2>
-    <a href="{% url 'profile_delete' %}">Delete</a>
+    <a type ="button" href="{% url 'profile_delete' %}">Deletar minha conta</a>
   </div>
 </main>
 {% endblock content %}

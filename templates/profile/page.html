@@ -6,14 +6,18 @@
 <main>
   <div class="profile-content">
     <div class="profile-infos">
-      <h1>{{profile.name}}</h1>
-      <h2>@{{profile.user.username}}</h2>
+      <h1>Meu Perfil</h1>
+      <h2>{{profile.name}} <i>@{{profile.user.username}}</i></h2>
       {% if profile.bio %}
         <p>{{profile.bio}}</p>
       {% endif %}
     </div>
     <div class="profile-pic">
       <img width="100" src="{{profile.avatar}}" alt="Foto de Perfil de {{profile.name}}">
+    </div>
+    <div class="grid">
+      <a type="button" href="{% url 'profile_edit' %}"> Editar Perfil</a>
+      <a type="button" href="{% url 'profile_settings' %}"> Configurações</a>
     </div>
   </div>
 </main>

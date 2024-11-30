@@ -3,6 +3,11 @@
 {% block title %}Inicio{% endblock title %}
 
 {% block content %}
-<h1>Inicio</h1>
-<h2>{{key}}</h2>
+{% if request.user.is_authenticated %}
+  <h1><a href="{% url 'chat' %}">Ir para o Chat</a></h1>
+{% else %}
+  <h1><a href="{% url 'login' %}">Entrar</a></h1>
+  <h2><a href="{% url 'register' %}">Ou crie uma conta</a></h2>
+{% endif %}
+
 {% endblock content %}
